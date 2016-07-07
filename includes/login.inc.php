@@ -45,6 +45,16 @@
 				$_SESSION['status'] = 1;
 			}
 			
+			// If user is a student, find which school user belongs to
+			// store university id in session array so that it can be
+			// accessed on other pages
+			$sql = "SELECT unv_id FROM student WHERE uid = '".$_SESSION['uid']."' LIMIT 1";
+			$res2 = mysqli_query ( $link, $sql );
+			if (mysqli_num_rows ( $res2 ) == 1) {
+				$row = mysqli_fetch_array($res2);
+				$_SESSION ['unv_id'] = $row['unv_id'];
+			}
+			
 			// Return to index
 			header("Location: ../index.php");
 	
