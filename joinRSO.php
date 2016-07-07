@@ -3,13 +3,11 @@ include ("header.php");
 
 if (loggedIn () && isset($_SESSION['unv_id'])) {
 	
-	echo 'RSOs at your university:<br><br>';
-	
 	include 'dbhandler.php';
 	
 	// Find rso events
-	// TODO, make unv_id dynamic
 	$unv_id = $_SESSION['unv_id'];
+	
 	$sql = "SELECT * FROM rso WHERE unv_id ='".$unv_id."'";
 	$response = mysqli_query ( $link, $sql );
 	
@@ -21,45 +19,31 @@ if (loggedIn () && isset($_SESSION['unv_id'])) {
 	{
 		echo '<table align="left"
 				cellspacing="5" cellpadding="8">
-				<tr><td align="left"><b>RSO Name</b></td>
-				<td align="left"><b></b></td>
+				<tr><td align="left"><b>Name</b></td>
+				<td align="left"><b>Join</b></td>
 				</tr>';
 		
 		// mysqli_fetch_array will return a row of data from the query
 		// until no further data is available
 		while ( $rso = mysqli_fetch_array ( $response ) ) {
-			// rso that user is already a part of
-			$in_rso = mysqli_fetch_array ( $res );
+
+			echo "<tr><td align='left'>";
+						
+			echo $rso['rso_name'];
+			echo "</td><td align='left'>";
+
+			// Clickable portion of user info
+			echo "<form method='get' action='joinRSO.inc.php'>
+				<input type='submit' name='Join' value='Join'/>
+				</form>";
 			
-			// Show user information
-			
-			if (mysqli_num_rows ( $rso ) == 1) {
-				// Show rso name
-				echo "<tr><td align='left'>" . $rso['name'] . "</td><td align='left'>";
-				
-				// Loops through rows and displays user info
-				echo "<td align='left'>";
-				
-				// If user is not already a member of the rso, show join button
-				if ($in_rso['rso_id'] != $rso['rso_id']) {
-					// Clickable portion of user info
-					echo "<form method='get' action='joinRSO.inc.php'>
-							<input type='submit' name='" . 'Join' . "'value='" . $row ['rso'] . "'/>
-							</form>";
-				} else {
-					// User is a member of the rso
-					echo "Already a member";
-				}
-				
-				echo '</tr>';
-			}
+			echo "</td><td align='left'></tr>";
 		}
 		
 		echo '</table>';
 	} else
 	{	
-		$_SESSION ['error'] = 4;
-		header ( "Location: index.php" );
+		echo "No RSOs";
 	}
 } else {
 	// Go home
