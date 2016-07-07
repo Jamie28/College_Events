@@ -2,6 +2,7 @@
 
 	include 'header.php';
 	
+	// If you can see this, git is working
 	
 	if (loggedIn())
 	{
