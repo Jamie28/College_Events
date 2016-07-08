@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2016 at 10:32 PM
+-- Generation Time: Jul 08, 2016 at 10:27 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.21
 
@@ -52,6 +52,21 @@ CREATE TABLE `in_rso` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `my_event`
+--
+
+CREATE TABLE `my_event` (
+  `evt_id` int(11) NOT NULL,
+  `e_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `e_date` date NOT NULL,
+  `contact` varchar(30) DEFAULT NULL,
+  `evt_name` varchar(50) DEFAULT NULL,
+  `description` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `person`
 --
 
@@ -71,7 +86,28 @@ INSERT INTO `person` (`uid`, `username`, `password`, `email`) VALUES
 (2, 'Ally', 'password', NULL),
 (3, 'Normie', 'password', NULL),
 (4, 'Mark', 'password', 'mark@unv.edu'),
-(5, 'Tommy', 'password', 'tommy@ucf.edu');
+(5, 'Tommy', 'password', 'tommy@ucf.edu'),
+(6, 'jim', 'pas', 'j@ucf.edu');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `private`
+--
+
+CREATE TABLE `private` (
+  `evt_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `public`
+--
+
+CREATE TABLE `public` (
+  `evt_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -90,7 +126,19 @@ CREATE TABLE `rso` (
 --
 
 INSERT INTO `rso` (`rso_id`, `rso_name`, `unv_id`) VALUES
-(1, 'Math Club', 1);
+(1, 'Math Club', 1),
+(2, 'Sports Club', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rso_e`
+--
+
+CREATE TABLE `rso_e` (
+  `evt_id` int(11) NOT NULL,
+  `rso_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -110,7 +158,8 @@ CREATE TABLE `student` (
 INSERT INTO `student` (`uid`, `unv_id`) VALUES
 (4, 0),
 (5, 0),
-(3, 1);
+(3, 1),
+(6, 1);
 
 -- --------------------------------------------------------
 
@@ -170,6 +219,12 @@ ALTER TABLE `in_rso`
   ADD PRIMARY KEY (`uid`,`rso_id`);
 
 --
+-- Indexes for table `my_event`
+--
+ALTER TABLE `my_event`
+  ADD PRIMARY KEY (`evt_id`,`e_time`,`e_date`);
+
+--
 -- Indexes for table `person`
 --
 ALTER TABLE `person`
@@ -177,11 +232,29 @@ ALTER TABLE `person`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indexes for table `private`
+--
+ALTER TABLE `private`
+  ADD PRIMARY KEY (`evt_id`);
+
+--
+-- Indexes for table `public`
+--
+ALTER TABLE `public`
+  ADD PRIMARY KEY (`evt_id`);
+
+--
 -- Indexes for table `rso`
 --
 ALTER TABLE `rso`
   ADD PRIMARY KEY (`rso_id`),
   ADD KEY `unv_id` (`unv_id`);
+
+--
+-- Indexes for table `rso_e`
+--
+ALTER TABLE `rso_e`
+  ADD PRIMARY KEY (`evt_id`,`rso_id`);
 
 --
 -- Indexes for table `student`
@@ -208,15 +281,20 @@ ALTER TABLE `university`
 --
 
 --
+-- AUTO_INCREMENT for table `my_event`
+--
+ALTER TABLE `my_event`
+  MODIFY `evt_id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `rso`
 --
 ALTER TABLE `rso`
-  MODIFY `rso_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `rso_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `university`
 --

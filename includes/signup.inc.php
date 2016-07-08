@@ -61,8 +61,25 @@ session_start();
 		// First check if user already exists
 		//include 'checkexists.inc.php';
 		
-		// Will need function that checks email to university
-		 
+		// Checks email to university
+		$str = $email;
+		$str2 = strstr($str, '@');//@ucf.edu
+		if($str2 != FALSE){
+			$domain = substr($str2, 1);//ucf.edu
+			$query = "SELECT * FROM university WHERE email = '".$domain."' LIMIT 1";
+			$row = mysqli_query($link, $query);
+			$data = mysqli_fetch_array($row);
+			if (!isset($data['unv_id']))
+			{
+				// If user email does not match a university, display error
+				// and exit signup
+				$_SESSION['error'] = 7;
+				header("Location: ../signup.php");
+				exit();
+			}
+			$_SESSION['unv_id'] = $data['unv_id'];
+		}
+		
 		// Insert into users table
 		$sql = "INSERT INTO person (uid, username, password, email) VALUES (?, ?, ?, ?)";
 		$stmt = mysqli_prepare($link, $sql);
@@ -87,7 +104,7 @@ session_start();
 			$sql = "INSERT INTO student (uid, unv_id) VALUES (?, ?)";
 			$stmt = mysqli_prepare($link, $sql);
 			// unv_id will have to be found using find university function
-			$unv_id = 0;
+			$unv_id = $data['unv_id'];
 			mysqli_stmt_bind_param($stmt, "ii", $uid, $unv_id);
 			mysqli_stmt_execute($stmt);
 		}

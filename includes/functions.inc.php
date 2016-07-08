@@ -51,6 +51,7 @@
 	function errorMsg()
 	{
 		// error codes:
+		// 7 - Email not in database
 		// 6 - Could not create user
 		// 5 - Passwords don't match
 		// 4 - Data Missing
@@ -88,6 +89,10 @@
 			else if ($_SESSION['error'] == 6)
 			{
 				echo "Could not create user<br>";
+			}
+			else if ($_SESSION['error'] == 7)
+			{
+				echo "Email is not in database<br>";
 			}
 			// reset error
 			$_SESSION['error'] = 0;
