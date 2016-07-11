@@ -44,7 +44,7 @@
 		if (empty($_POST['evt_contact'])) {
 			$contactErr = "A contact is required";
 		} else {
-			$contact = test_input($_POST['evt_contact']);
+			$evt_contact = test_input($_POST['evt_contact']);
 		}
 	}		
 	

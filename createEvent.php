@@ -17,12 +17,12 @@
    <span class="error">* </span><br><br>
   Date: <input type = "date" name = "evt_date" >
   <span class="error">* </span><br><br>
-  Comment: <textarea name="evt_comment" rows="5" cols="40"></textarea>
+  Comments: <textarea name="evt_comment" rows="5" cols="40"></textarea>
   <br><br>
   Description: <input type = "text" name = "evt_description" >
-   <br><br>
+   <br><br>  
   Contact: <input type = "text" name = "evt_contact" >
-  <br><br>
+  <span class="error">* </span><br><br> 
   <input type="submit" name="Submit" value="Submit">  
 </form>
 </body>
