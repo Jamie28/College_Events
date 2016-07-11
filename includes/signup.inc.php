@@ -117,7 +117,7 @@ session_start();
 		}
 		else
 		{
-			$_SESSIIN['error'] = 6;
+			$_SESSION['error'] = 6;
 		}
 	
 		mysqli_stmt_close($stmt);

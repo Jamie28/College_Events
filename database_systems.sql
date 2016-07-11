@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2016 at 05:26 AM
+-- Generation Time: Jul 11, 2016 at 08:34 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -45,8 +45,7 @@ INSERT INTO `admin` (`uid`) VALUES
 
 CREATE TABLE `in_rso` (
   `uid` int(11) NOT NULL,
-  `rso_id` int(11) NOT NULL,
-  `since` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `rso_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -126,16 +125,17 @@ CREATE TABLE `public` (
 CREATE TABLE `rso` (
   `rso_id` int(11) NOT NULL,
   `rso_name` varchar(50) DEFAULT NULL,
-  `unv_id` int(11) NOT NULL
+  `unv_id` int(11) NOT NULL,
+  `owner_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rso`
 --
 
-INSERT INTO `rso` (`rso_id`, `rso_name`, `unv_id`) VALUES
-(1, 'Math Club', 1),
-(2, 'Sports Club', 1);
+INSERT INTO `rso` (`rso_id`, `rso_name`, `unv_id`, `owner_id`) VALUES
+(1, 'Math Club', 1, 0),
+(2, 'Sports Club', 1, 0);
 
 -- --------------------------------------------------------
 
