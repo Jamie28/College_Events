@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 08, 2016 at 10:27 PM
+-- Generation Time: Jul 11, 2016 at 05:26 AM
 -- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.21
+-- PHP Version: 5.6.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -57,13 +57,21 @@ CREATE TABLE `in_rso` (
 
 CREATE TABLE `my_event` (
   `evt_id` int(11) NOT NULL,
-  `evt_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `evt_time` time NOT NULL,
   `evt_comment` varchar(100) DEFAULT NULL,
   `evt_date` date NOT NULL,
-  `evt_contact` varchar(10) DEFAULT NULL,
+  `evt_contact` bigint(20) UNSIGNED DEFAULT NULL,
   `evt_name` varchar(50) DEFAULT NULL,
-  `evt_description` text
+  `evt_description` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `my_event`
+--
+
+INSERT INTO `my_event` (`evt_id`, `evt_time`, `evt_comment`, `evt_date`, `evt_contact`, `evt_name`, `evt_description`) VALUES
+(1, '19:00:00', 'teams of 4 only', '2016-07-29', NULL, 'Dodgeball', 'Tournament Style'),
+(2, '13:30:00', 'Students must bring their own textbooks!', '2016-07-24', NULL, 'Tutoring', 'CECS Event');
 
 -- --------------------------------------------------------
 
@@ -87,8 +95,7 @@ INSERT INTO `person` (`uid`, `username`, `password`, `email`) VALUES
 (2, 'Ally', 'password', NULL),
 (3, 'Normie', 'password', NULL),
 (4, 'Mark', 'password', 'mark@unv.edu'),
-(5, 'Tommy', 'password', 'tommy@ucf.edu'),
-(6, 'jim', 'pas', 'j@ucf.edu');
+(5, 'Tommy', 'password', 'tommy@ucf.edu');
 
 -- --------------------------------------------------------
 
@@ -223,7 +230,7 @@ ALTER TABLE `in_rso`
 -- Indexes for table `my_event`
 --
 ALTER TABLE `my_event`
-  ADD PRIMARY KEY (`evt_id`,`e_time`,`e_date`);
+  ADD PRIMARY KEY (`evt_id`,`evt_time`,`evt_date`);
 
 --
 -- Indexes for table `person`
@@ -285,12 +292,12 @@ ALTER TABLE `university`
 -- AUTO_INCREMENT for table `my_event`
 --
 ALTER TABLE `my_event`
-  MODIFY `evt_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `evt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `rso`
 --
