@@ -57,11 +57,12 @@ CREATE TABLE `in_rso` (
 
 CREATE TABLE `my_event` (
   `evt_id` int(11) NOT NULL,
-  `e_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `e_date` date NOT NULL,
-  `contact` varchar(30) DEFAULT NULL,
+  `evt_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `evt_comment` varchar(100) DEFAULT NULL,
+  `evt_date` date NOT NULL,
+  `evt_contact` varchar(10) DEFAULT NULL,
   `evt_name` varchar(50) DEFAULT NULL,
-  `description` text
+  `evt_description` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

@@ -71,7 +71,7 @@
 			}
 			else if ($_SESSION['error'] == 3)
 			{
-				echo "Could not create university<br>";
+				echo "Could not create university.<br>";
 			}
 			else if ($_SESSION['error'] == 4)
 			{
@@ -84,15 +84,19 @@
 			}
 			else if ($_SESSION['error'] == 5)
 			{
-				echo "Passwords don't match<br>";
+				echo "Passwords don't match.<br>";
 			}
 			else if ($_SESSION['error'] == 6)
 			{
-				echo "Could not create user<br>";
+				echo "Could not create user.<br>";
 			}
 			else if ($_SESSION['error'] == 7)
 			{
-				echo "Email is not in database<br>";
+				echo "Email is not in database.<br>";
+			}
+			else if ($_SESSION['error'] == 8)
+			{
+				echo "Could not create event.";
 			}
 			// reset error
 			$_SESSION['error'] = 0;

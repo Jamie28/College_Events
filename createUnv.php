@@ -1,7 +1,5 @@
 <?php
-
 	include 'header.php';
-
 	if (isSuperAdmin())
 	{
 		// Create University Button

@@ -1,9 +1,7 @@
-<?php
+<?php	
+	session_start();	
 	
-	session_start();
-	
-	include 'functions.inc.php';
-	
+	include 'functions.inc.php';	
 	
 	// Only input into database if user is a superadmin
 	if (loggedIn() && isSuperAdmin())
