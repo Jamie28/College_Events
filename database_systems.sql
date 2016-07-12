@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2016 at 08:34 PM
+-- Generation Time: Jul 12, 2016 at 04:49 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -36,6 +36,17 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`uid`) VALUES
 (2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `approved_evts`
+--
+
+CREATE TABLE `approved_evts` (
+  `evt_id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -219,6 +230,12 @@ INSERT INTO `university` (`unv_id`, `unv_name`, `population`, `description`, `em
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`uid`);
+
+--
+-- Indexes for table `approved_evts`
+--
+ALTER TABLE `approved_evts`
+  ADD PRIMARY KEY (`evt_id`);
 
 --
 -- Indexes for table `in_rso`
