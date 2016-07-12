@@ -3,7 +3,7 @@
 	
 	include 'functions.inc.php';
 	
-	$nameErr = $dateErr = $timeErr = $contactErr = $descErr = NULL;
+	$nameErr = $dateErr = $timeErr = $contactErr = $descErr = $locationErr = NULL;
 	
 	if (loggedIn() && isAdmin()){
 		
@@ -46,6 +46,12 @@
 		} else {
 			$evt_contact = test_input($_POST['evt_contact']);
 		}
+		
+		if (empty($_POST['location'])) {
+			$locationErr = "Event location is required";
+		} else {
+			$location = test_input($_POST['location']);
+		}
 	}		
 	
 	function test_input($data) {
@@ -54,15 +60,15 @@
 		$data = htmlspecialchars($data);
 		return $data;
 	}
-	if((($nameErr == NULL) && ($timeErr == NULL) && ($dateErr == NULL))){
+	if((($nameErr == NULL) && ($timeErr == NULL) && ($dateErr == NULL) && ($locationErr == NULL))){
 		
 		include '../dbhandler.php';
 		
-		$insert = "INSERT INTO my_event (evt_id, evt_time, evt_comment, evt_date, evt_contact, evt_name, evt_description) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		$insert = "INSERT INTO my_event (evt_id, evt_time, evt_comment, evt_date, evt_contact, evt_name, evt_description, location) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		$stmt = mysqli_prepare($link, $insert);
 		$evt_id = NULL;
-		mysqli_stmt_bind_param($stmt, "issssss", $evt_id,
-				$evt_time, $evt_comment, $evt_date, $evt_contact, $evt_name, $evt_description);
+		mysqli_stmt_bind_param($stmt, "isssssss", $evt_id,
+				$evt_time, $evt_comment, $evt_date, $evt_contact, $evt_name, $evt_description, $location);
 		mysqli_stmt_execute($stmt);
 		$affected_rows = mysqli_stmt_affected_rows($stmt);
 		if ($affected_rows == 1)
@@ -87,6 +93,12 @@
 			echo "$contactErr<br>";
 		if(!($descErr==NULL))
 			echo "$descErr<br>";
+		if (!($locationErr == NULL))
+			echo "$locationErr<br>";
+		
 		
 	}
 	?>
+	<br><br>
+<a href="../createEvent.php">Return</a>
+</body>
