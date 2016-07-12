@@ -1,5 +1,8 @@
 <?php
 include ("header.php");
+?>
+<h2>Join an RSO</h2>
+<?php
 
 if (loggedIn () && isset($_SESSION['unv_id'])) {
 	
@@ -10,10 +13,6 @@ if (loggedIn () && isset($_SESSION['unv_id'])) {
 	
 	$sql = "SELECT * FROM rso WHERE unv_id ='".$unv_id."'";
 	$response = mysqli_query ( $link, $sql );
-	
-	// Find rso's that user is already a part of
-	$sqlName = "SELECT * FROM in_rso WHERE uid='" . $_SESSION ['uid'] . "'";
-	$res = mysqli_query ( $link, $sqlName );
 	
 	if ($response) 
 	{
@@ -32,10 +31,28 @@ if (loggedIn () && isset($_SESSION['unv_id'])) {
 			echo $rso['rso_name'];
 			echo "</td><td align='left'>";
 
-			// Clickable portion of user info
-			echo "<form method='get' action='joinRSO.inc.php'>
-				<input type='submit' name='Join' value='Join'/>
-				</form>";
+			// Check if user is in rso
+			$query = "SELECT * FROM in_rso WHERE uid='" . $_SESSION ['uid'] . "' AND rso_id = '".$rso['rso_id']."' LIMIT 1";
+			$ares = mysqli_query ( $link, $query );
+			if(mysqli_num_rows($ares) == 1)
+				$inRSO = true;
+			else
+				$inRSO = false;
+			
+			if (!$inRSO)
+			{
+				// Clickable portion of user info
+
+				echo "<form method='post' action='includes/joinRSO.inc.php'>";
+				echo "<input type='hidden' name='rso_id' value='" . $rso['rso_id'] . "'/>";
+				echo "<input type='submit' name='Join' value='Join'/></form>";
+			}
+			else
+			{
+				echo "<form method='post' action='includes/joinRSO.inc.php'>";
+				echo "<input type='hidden' name='rso_id' value='" . $rso['rso_id'] . "'/>";
+				echo "<input type='submit' name='Leave' value='Leave'/></form>";
+			}
 			
 			echo "</td><td align='left'></tr>";
 		}

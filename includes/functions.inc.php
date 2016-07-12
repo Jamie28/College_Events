@@ -51,6 +51,8 @@
 	function errorMsg()
 	{
 		// error codes:
+		// 9 - General error (for testing)
+		// 8 - Could not create event
 		// 7 - Email not in database
 		// 6 - Could not create user
 		// 5 - Passwords don't match
@@ -96,7 +98,11 @@
 			}
 			else if ($_SESSION['error'] == 8)
 			{
-				echo "Could not create event.";
+				echo "Could not create event.<br>";
+			}
+			else if ($_SESSION['error'] == 9)
+			{
+				echo "Error<br>";
 			}
 			// reset error
 			$_SESSION['error'] = 0;
