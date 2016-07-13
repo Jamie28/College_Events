@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2016 at 09:08 PM
+-- Generation Time: Jul 13, 2016 at 09:56 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.21
 
@@ -90,19 +90,21 @@ INSERT INTO `in_rso` (`uid`, `rso_id`, `since`) VALUES
 
 CREATE TABLE `my_event` (
   `evt_id` int(11) NOT NULL,
-  `e_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `e_date` date NOT NULL,
-  `contact` varchar(30) DEFAULT NULL,
+  `evt_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `evt_comment` text NOT NULL,
+  `evt_date` date NOT NULL,
+  `evt_contact` varchar(30) DEFAULT NULL,
   `evt_name` varchar(50) DEFAULT NULL,
-  `description` text
+  `evt_description` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `my_event`
 --
 
-INSERT INTO `my_event` (`evt_id`, `e_time`, `e_date`, `contact`, `evt_name`, `description`) VALUES
-(1, '2016-07-13 18:18:19', '2016-07-28', '352-222-8405', 'Linear Presentation', 'A presentation about Linear Programming.');
+INSERT INTO `my_event` (`evt_id`, `evt_time`, `evt_comment`, `evt_date`, `evt_contact`, `evt_name`, `evt_description`) VALUES
+(1, '2016-07-13 18:18:19', '', '2016-07-28', '352-222-8405', 'Linear Presentation', 'A presentation about Linear Programming.'),
+(2, '0000-00-00 00:00:00', 'Test', '2016-12-31', 'Test', 'Test', 'Test');
 
 -- --------------------------------------------------------
 
@@ -300,7 +302,7 @@ ALTER TABLE `in_rso`
 -- Indexes for table `my_event`
 --
 ALTER TABLE `my_event`
-  ADD PRIMARY KEY (`evt_id`,`e_time`,`e_date`);
+  ADD PRIMARY KEY (`evt_id`,`evt_time`,`evt_date`);
 
 --
 -- Indexes for table `person`
@@ -367,7 +369,7 @@ ALTER TABLE `approve_e`
 -- AUTO_INCREMENT for table `my_event`
 --
 ALTER TABLE `my_event`
-  MODIFY `evt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `evt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `person`
 --

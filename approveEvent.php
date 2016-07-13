@@ -59,7 +59,7 @@ if (loggedIn () && isSuperAdmin()) {
 				echo $rso['rso_name'];
 				// Event Description
 				echo "</td><td align='left'>";
-				echo $my_event['description'];
+				echo $my_event['evt_description'];
 				echo "</td><td align='left'></tr>";
 			}
 		}
@@ -108,7 +108,7 @@ if (loggedIn () && isSuperAdmin()) {
 				echo $rso['rso_name'];
 				// Event Description
 				echo "</td><td align='left'>";
-				echo $my_event['description'];
+				echo $my_event['evt_description'];
 				echo "</td><td align='left'></tr>";
 			}
 		}
