@@ -1,11 +1,12 @@
 <?php
 	session_start();
-	include '../dbhandler.php';
 	include 'functions.inc.php';
 	
 	
 	if (isset($_POST['Join']) && loggedIn())
 	{
+		include '../dbhandler.php';
+		
 		//INSERT INTO `in_rso` (`uid`, `rso_id`, `since`) VALUES ('2', '2', CURRENT_TIMESTAMP)
 		// Insert
 		$sql = "INSERT INTO in_rso (uid, rso_id) VALUES (?, ?)";
@@ -18,14 +19,12 @@
 		if ($affected_rows != 1)
 			$_SESSION['error'] = 9;
 		
-		// reset rso_id session variable
-		$_SESSION['rso_id'] = 0;
-		
 		// Return to joinRSO page
 		header("Location: ../joinRSO.php");
 	}
 	else if (isset($_POST['Leave']) && loggedIn())
 	{
+		include '../dbhandler.php';
 		
 		// DELETE FROM `in_rso` WHERE `in_rso`.`uid` = 12 AND `in_rso`.`rso_id` = 1
 		// Delete
@@ -40,8 +39,6 @@
 		if ($affected_rows != 1)
 			$_SESSION['error'] = 9;
 		
-		// reset rso_id session variable
-		$_SESSION['rso_id'] = 0;
 		
 		// Return to joinRSO page
 		header("Location: ../joinRSO.php");
