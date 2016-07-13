@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2016 at 04:49 AM
+-- Generation Time: Jul 13, 2016 at 09:08 PM
 -- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.23
+-- PHP Version: 5.6.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -35,18 +35,27 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`uid`) VALUES
-(2);
+(2),
+(3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `approved_evts`
+-- Table structure for table `approve_e`
 --
 
-CREATE TABLE `approved_evts` (
+CREATE TABLE `approve_e` (
+  `aid` int(11) NOT NULL,
   `evt_id` int(11) NOT NULL,
-  `uid` int(11) NOT NULL
+  `approved` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `approve_e`
+--
+
+INSERT INTO `approve_e` (`aid`, `evt_id`, `approved`) VALUES
+(1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -56,8 +65,22 @@ CREATE TABLE `approved_evts` (
 
 CREATE TABLE `in_rso` (
   `uid` int(11) NOT NULL,
-  `rso_id` int(11) NOT NULL
+  `rso_id` int(11) NOT NULL,
+  `since` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `in_rso`
+--
+
+INSERT INTO `in_rso` (`uid`, `rso_id`, `since`) VALUES
+(3, 3, '2016-07-11 22:15:47'),
+(8, 3, '2016-07-11 22:16:55'),
+(9, 3, '2016-07-11 22:15:47'),
+(10, 3, '2016-07-11 22:15:47'),
+(11, 3, '2016-07-11 22:15:47'),
+(12, 1, '2016-07-11 23:16:28'),
+(12, 2, '2016-07-11 23:16:29');
 
 -- --------------------------------------------------------
 
@@ -67,21 +90,19 @@ CREATE TABLE `in_rso` (
 
 CREATE TABLE `my_event` (
   `evt_id` int(11) NOT NULL,
-  `evt_time` time NOT NULL,
-  `evt_comment` varchar(100) DEFAULT NULL,
-  `evt_date` date NOT NULL,
-  `evt_contact` bigint(20) UNSIGNED DEFAULT NULL,
+  `e_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `e_date` date NOT NULL,
+  `contact` varchar(30) DEFAULT NULL,
   `evt_name` varchar(50) DEFAULT NULL,
-  `evt_description` varchar(20) DEFAULT NULL
+  `description` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `my_event`
 --
 
-INSERT INTO `my_event` (`evt_id`, `evt_time`, `evt_comment`, `evt_date`, `evt_contact`, `evt_name`, `evt_description`) VALUES
-(1, '19:00:00', 'teams of 4 only', '2016-07-29', NULL, 'Dodgeball', 'Tournament Style'),
-(2, '13:30:00', 'Students must bring their own textbooks!', '2016-07-24', NULL, 'Tutoring', 'CECS Event');
+INSERT INTO `my_event` (`evt_id`, `e_time`, `e_date`, `contact`, `evt_name`, `description`) VALUES
+(1, '2016-07-13 18:18:19', '2016-07-28', '352-222-8405', 'Linear Presentation', 'A presentation about Linear Programming.');
 
 -- --------------------------------------------------------
 
@@ -105,7 +126,22 @@ INSERT INTO `person` (`uid`, `username`, `password`, `email`) VALUES
 (2, 'Ally', 'password', NULL),
 (3, 'Normie', 'password', NULL),
 (4, 'Mark', 'password', 'mark@unv.edu'),
-(5, 'Tommy', 'password', 'tommy@ucf.edu');
+(5, 'Tommy', 'password', 'tommy@ucf.edu'),
+(6, 'jim', 'pas', 'j@ucf.edu'),
+(7, 'florida', 'pass', 'florida@f.edu'),
+(8, 'Tammy', 'password', 'tammy@ucf.edu'),
+(9, 'jeff', 'password', 'jeff@ucf.edu'),
+(10, 'bob', 'password', 'bob@ucf.edu'),
+(11, 'kevin', 'password', 'kevin@ucf.edu'),
+(12, 'lucas', 'password', 'lucas@ucf.edu'),
+(13, 'Jim', 'password', 'jim@uf.edu'),
+(14, NULL, NULL, NULL),
+(15, NULL, NULL, NULL),
+(16, NULL, NULL, NULL),
+(17, NULL, NULL, NULL),
+(18, NULL, NULL, NULL),
+(19, NULL, NULL, NULL),
+(20, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -136,17 +172,18 @@ CREATE TABLE `public` (
 CREATE TABLE `rso` (
   `rso_id` int(11) NOT NULL,
   `rso_name` varchar(50) DEFAULT NULL,
-  `unv_id` int(11) NOT NULL,
-  `owner_id` int(11) NOT NULL
+  `unv_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rso`
 --
 
-INSERT INTO `rso` (`rso_id`, `rso_name`, `unv_id`, `owner_id`) VALUES
-(1, 'Math Club', 1, 0),
-(2, 'Sports Club', 1, 0);
+INSERT INTO `rso` (`rso_id`, `rso_name`, `unv_id`) VALUES
+(1, 'Math Club', 1),
+(2, 'Sports Club', 1),
+(3, 'Dodgeball Club', 1),
+(4, 'UF Club', 2);
 
 -- --------------------------------------------------------
 
@@ -158,6 +195,13 @@ CREATE TABLE `rso_e` (
   `evt_id` int(11) NOT NULL,
   `rso_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rso_e`
+--
+
+INSERT INTO `rso_e` (`evt_id`, `rso_id`) VALUES
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -177,8 +221,16 @@ CREATE TABLE `student` (
 INSERT INTO `student` (`uid`, `unv_id`) VALUES
 (4, 0),
 (5, 0),
+(2, 1),
 (3, 1),
-(6, 1);
+(6, 1),
+(8, 1),
+(9, 1),
+(10, 1),
+(11, 1),
+(12, 1),
+(13, 2),
+(7, 4);
 
 -- --------------------------------------------------------
 
@@ -219,7 +271,8 @@ CREATE TABLE `university` (
 INSERT INTO `university` (`unv_id`, `unv_name`, `population`, `description`, `email`, `address`) VALUES
 (1, 'University of Central Florida', 60000, 'Florida university near downtown Orlando.', 'ucf.edu', '4000 Central Florida Blvd, Orlando, FL 32816'),
 (2, 'University of Florida', NULL, NULL, 'uf.edu', NULL),
-(3, 'University of South Florida', NULL, NULL, 'usf.edu', NULL);
+(3, 'University of South Florida', NULL, NULL, 'usf.edu', NULL),
+(4, 'Florida University', NULL, NULL, 'f.edu', NULL);
 
 --
 -- Indexes for dumped tables
@@ -232,10 +285,10 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`uid`);
 
 --
--- Indexes for table `approved_evts`
+-- Indexes for table `approve_e`
 --
-ALTER TABLE `approved_evts`
-  ADD PRIMARY KEY (`evt_id`);
+ALTER TABLE `approve_e`
+  ADD PRIMARY KEY (`aid`,`evt_id`);
 
 --
 -- Indexes for table `in_rso`
@@ -247,7 +300,7 @@ ALTER TABLE `in_rso`
 -- Indexes for table `my_event`
 --
 ALTER TABLE `my_event`
-  ADD PRIMARY KEY (`evt_id`,`evt_time`,`evt_date`);
+  ADD PRIMARY KEY (`evt_id`,`e_time`,`e_date`);
 
 --
 -- Indexes for table `person`
@@ -306,25 +359,30 @@ ALTER TABLE `university`
 --
 
 --
+-- AUTO_INCREMENT for table `approve_e`
+--
+ALTER TABLE `approve_e`
+  MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `my_event`
 --
 ALTER TABLE `my_event`
-  MODIFY `evt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `evt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `rso`
 --
 ALTER TABLE `rso`
-  MODIFY `rso_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `rso_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `university`
 --
 ALTER TABLE `university`
-  MODIFY `unv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `unv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --
