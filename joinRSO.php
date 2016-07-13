@@ -66,3 +66,13 @@ if (loggedIn () && isset($_SESSION['unv_id'])) {
 	// Go home
 	header ( "Location: index.php" );
 }
+?>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br><br>
+
+	<a href="index.php">Return</a>
+	</body>

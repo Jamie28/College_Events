@@ -50,6 +50,7 @@
 		header("Location: ../joinRSO.php");
 		
 	}
+	
 		
 	// For reference
 	/*$sql = "INSERT INTO person (uid, username, password, email) VALUES (?, ?, ?, ?)";
