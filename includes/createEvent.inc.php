@@ -45,10 +45,12 @@
 			$evt_contact = test_input($_POST['evt_contact']);
 		}
 		
-		if (empty($_POST['location'])) {
+		if (empty($_POST['lat']) || empty($_POST['lng'])) {
 			$locationErr = "Event location is required";
 		} else {
-			$location = test_input($_POST['location']);
+			$lat = test_input($_POST['lat']);
+			$lng = test_input($_POST['lng']);
+			$address = test_input($_POST['address']);
 		}
 	}		
 	

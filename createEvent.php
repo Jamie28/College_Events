@@ -35,7 +35,8 @@ padding: 0;
   <span class="error">* </span><br><br> 
   Location: <input type = "text" name = "lat" id="lat" value="28.601492">
   <input type = "text" name = "lng" id="lng" value="-81.200140">
-  <span class="error">* </span><br><br> 
+  <span class="error">* </span><br>
+  Address: <input type = "text" name = "address" id="address" value="UCF"><br><br> 
   <div id="map"></div>
   <div id="capture"></div>
   <script>
@@ -53,16 +54,26 @@ padding: 0;
 		map: map
 		});
 
+	var geocoder = new google.maps.Geocoder;
+	
 	google.maps.event.addListener(map, 'click', function(event) {
-		addMarker(event.latLng, map);
+		addMarker(geocoder, event.latLng, map);
 	});
 	
 	}
 
-	function addMarker(location, map){
+	function addMarker(geocoder, location, map){
 		marker.setPosition(location);
 		document.getElementById("lat").value = location.lat();
 		document.getElementById("lng").value = location.lng();
+
+		var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + location.lat() + "," + location.lng();
+		var xhReq = new XMLHttpRequest();
+		xhReq.open("GET", url, false);
+		xhReq.send(null);
+		var jsonObject = JSON.parse(xhReq.responseText);
+
+		document.getElementById("address").value = jsonObject.results[1].formatted_address;
 	}
 	
   </script>
