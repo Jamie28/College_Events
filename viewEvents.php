@@ -5,16 +5,6 @@
 	
 		include "dbhandler.php";
 	
-		//$feed_url = 'https://events.ucf.edu/feed.rss';
-		//$content = file_get_contents($feed_url);
-		//$x = new SimpleXmlElement($content);
-		//echo "<div class='list-group'>";
-		//foreach($x->channel->item as $entry) {
-			//echo "<h3><a class='list-group-item-heading' href='$entry->link' title='$entry->title'>" . $entry->title . "</a></h3>";
-			//echo "<p class='list-group-item-text'>" . $entry->description . "</p>";
-		//}
-		//echo "</div>";
-	
 		try
 		{
 			$dbh = new PDO("mysql:host=$server;dbname=$db_name", $user, $pass);
