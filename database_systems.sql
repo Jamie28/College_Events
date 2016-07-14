@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2016 at 09:56 PM
+-- Generation Time: Jul 14, 2016 at 12:53 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.21
 
@@ -55,7 +55,7 @@ CREATE TABLE `approve_e` (
 --
 
 INSERT INTO `approve_e` (`aid`, `evt_id`, `approved`) VALUES
-(1, 1, 0);
+(2, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,8 @@ CREATE TABLE `my_event` (
 
 INSERT INTO `my_event` (`evt_id`, `evt_time`, `evt_comment`, `evt_date`, `evt_contact`, `evt_name`, `evt_description`) VALUES
 (1, '2016-07-13 18:18:19', '', '2016-07-28', '352-222-8405', 'Linear Presentation', 'A presentation about Linear Programming.'),
-(2, '0000-00-00 00:00:00', 'Test', '2016-12-31', 'Test', 'Test', 'Test');
+(2, '0000-00-00 00:00:00', 'Test', '2016-12-31', 'Test', 'Test', 'Test'),
+(3, '2016-07-13 22:29:41', 'Pokemon Go event by the reflection pond.', '2016-07-28', '352-555-5555', 'Pokemon Go by the pond', 'Pokemon Go by the reflection pond.');
 
 -- --------------------------------------------------------
 
@@ -152,8 +153,16 @@ INSERT INTO `person` (`uid`, `username`, `password`, `email`) VALUES
 --
 
 CREATE TABLE `private` (
-  `evt_id` int(11) NOT NULL
+  `evt_id` int(11) NOT NULL,
+  `unv_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `private`
+--
+
+INSERT INTO `private` (`evt_id`, `unv_id`) VALUES
+(3, 1);
 
 -- --------------------------------------------------------
 
@@ -162,7 +171,8 @@ CREATE TABLE `private` (
 --
 
 CREATE TABLE `public` (
-  `evt_id` int(11) NOT NULL
+  `evt_id` int(11) NOT NULL,
+  `unv_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -315,13 +325,15 @@ ALTER TABLE `person`
 -- Indexes for table `private`
 --
 ALTER TABLE `private`
-  ADD PRIMARY KEY (`evt_id`);
+  ADD PRIMARY KEY (`evt_id`),
+  ADD KEY `unv_id` (`unv_id`);
 
 --
 -- Indexes for table `public`
 --
 ALTER TABLE `public`
-  ADD PRIMARY KEY (`evt_id`);
+  ADD PRIMARY KEY (`evt_id`),
+  ADD KEY `unv_id` (`unv_id`);
 
 --
 -- Indexes for table `rso`
@@ -364,12 +376,12 @@ ALTER TABLE `university`
 -- AUTO_INCREMENT for table `approve_e`
 --
 ALTER TABLE `approve_e`
-  MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `my_event`
 --
 ALTER TABLE `my_event`
-  MODIFY `evt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `evt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `person`
 --
@@ -388,6 +400,18 @@ ALTER TABLE `university`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `private`
+--
+ALTER TABLE `private`
+  ADD CONSTRAINT `fk_private_unv_id` FOREIGN KEY (`unv_id`) REFERENCES `university` (`unv_id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `public`
+--
+ALTER TABLE `public`
+  ADD CONSTRAINT `fk_public_unv_id` FOREIGN KEY (`unv_id`) REFERENCES `university` (`unv_id`);
 
 --
 -- Constraints for table `rso`

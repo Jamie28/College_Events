@@ -4,6 +4,9 @@ include ("header.php");
 <h2>Approve Event</h2>
 <?php
 
+// This page allows for the superadmin to approve events made by individual students
+// RSO events don't need approval
+
 if (loggedIn () && isSuperAdmin()) {
 	
 	include 'dbhandler.php';
@@ -19,8 +22,10 @@ if (loggedIn () && isSuperAdmin()) {
 				cellspacing="5" cellpadding="8">
 				<tr><td align="left"><b>Event</b></td>
 				<td align="left"><b>Approve</b></td>
-				<td align="left"><b>RSO</b></td>
+				<td align="left"><b>University</b></td>
+				<td align="left"><b>Public/Private</b></td>
 				<td align="left"><b>Description</b></td>
+				<td align="left"><b>Comments</b></td>
 				</tr>';
 		
 		// mysqli_fetch_array will return a row of data from the query
@@ -35,15 +40,35 @@ if (loggedIn () && isSuperAdmin()) {
 				$res = mysqli_query ( $link, $sql );
 				$my_event = mysqli_fetch_array($res);
 				
-				// Get rso id
-				$sql = "SELECT * FROM rso_e WHERE evt_id ='".$approve_e['evt_id']."'";
+				// Get private events
+				$sql = "SELECT * FROM private WHERE evt_id ='".$approve_e['evt_id']."'";
 				$res = mysqli_query ( $link, $sql );
-				$rso_e = mysqli_fetch_array($res);
 				
-				// Get rso name
-				$sql = "SELECT * FROM rso WHERE rso_id ='".$rso_e['rso_id']."'";
-				$res = mysqli_query ( $link, $sql );
-				$rso = mysqli_fetch_array($res);
+				// if there is a private event, get the result array
+				if ($res)
+				{
+					$private = mysqli_fetch_array($res);
+					$isPrivate = true;
+					
+					// Get university ID
+					$sql = "SELECT * FROM university WHERE unv_id ='".$private['unv_id']."'";
+					$res = mysqli_query ( $link, $sql );
+					$university = mysqli_fetch_array($res);
+				}
+				else
+				{	
+					// Get public events
+					$sql = "SELECT * FROM public WHERE evt_id ='".$approve_e['evt_id']."'";
+					$res = mysqli_query ( $link, $sql );
+					$public = mysqli_fetch_array($res);
+					
+					$isPrivate = false;
+					
+					// Get university ID
+					$sql = "SELECT * FROM university WHERE unv_id ='".$public['unv_id']."'";
+					$res = mysqli_query ( $link, $sql );
+					$university = mysqli_fetch_array($res);
+				}
 				
 				echo "<tr><td align='left'>";
 				// Event name
@@ -54,12 +79,21 @@ if (loggedIn () && isSuperAdmin()) {
 				echo "<input type='hidden' name='evt_id' value='" . $approve_e['evt_id'] . "'/>";
 				echo "<input type='hidden' name='aid' value='" . $approve_e['aid'] . "'/>";
 				echo "<input type='submit' name='Approve' value='Approve'/></form>";
-				// RSO name
+				// University Name
 				echo "</td><td align='left'>";
-				echo $rso['rso_name'];
+				echo $university['unv_name'];
+				// Public or private
+				echo "</td><td align='left'>";
+				if ($isPrivate)
+					echo "Private";
+				else if (!$isPrivate)
+					echo "Public";
 				// Event Description
 				echo "</td><td align='left'>";
 				echo $my_event['evt_description'];
+				// Comments
+				echo "</td><td align='left'>";
+				echo $my_event['evt_comment'];
 				echo "</td><td align='left'></tr>";
 			}
 		}
@@ -84,15 +118,35 @@ if (loggedIn () && isSuperAdmin()) {
 				$res = mysqli_query ( $link, $sql );
 				$my_event = mysqli_fetch_array($res);
 		
-				// Get rso id
-				$sql = "SELECT * FROM rso_e WHERE evt_id ='".$approve_e['evt_id']."'";
+				// Get private events
+				$sql = "SELECT * FROM private WHERE evt_id ='".$approve_e['evt_id']."'";
 				$res = mysqli_query ( $link, $sql );
-				$rso_e = mysqli_fetch_array($res);
-		
-				// Get rso name
-				$sql = "SELECT * FROM rso WHERE rso_id ='".$rso_e['rso_id']."'";
-				$res = mysqli_query ( $link, $sql );
-				$rso = mysqli_fetch_array($res);
+				
+				// if there is a private event, get the result array
+				if ($res)
+				{
+					$private = mysqli_fetch_array($res);
+					$isPrivate = true;
+					
+					// Get university ID
+					$sql = "SELECT * FROM university WHERE unv_id ='".$private['unv_id']."'";
+					$res = mysqli_query ( $link, $sql );
+					$university = mysqli_fetch_array($res);
+				}
+				else
+				{	
+					// Get public events
+					$sql = "SELECT * FROM public WHERE evt_id ='".$approve_e['evt_id']."'";
+					$res = mysqli_query ( $link, $sql );
+					$public = mysqli_fetch_array($res);
+					
+					$isPrivate = false;
+					
+					// Get university ID
+					$sql = "SELECT * FROM university WHERE unv_id ='".$public['unv_id']."'";
+					$res = mysqli_query ( $link, $sql );
+					$university = mysqli_fetch_array($res);
+				}
 		
 				echo "<tr><td align='left'>";
 				// Event name
@@ -103,12 +157,21 @@ if (loggedIn () && isSuperAdmin()) {
 				echo "<input type='hidden' name='evt_id' value='" . $approve_e['evt_id'] . "'/>";
 				echo "<input type='hidden' name='aid' value='" . $approve_e['aid'] . "'/>";
 				echo "<input type='submit' name='Unapprove' value='Unapprove'/></form>";
-				// RSO name
+				// University Name
 				echo "</td><td align='left'>";
-				echo $rso['rso_name'];
+				echo $university['unv_name'];
+				// Public or private
+				echo "</td><td align='left'>";
+				if ($isPrivate)
+					echo "Private";
+				else if (!$isPrivate)
+					echo "Public";
 				// Event Description
 				echo "</td><td align='left'>";
 				echo $my_event['evt_description'];
+				// Comments
+				echo "</td><td align='left'>";
+				echo $my_event['evt_comment'];
 				echo "</td><td align='left'></tr>";
 			}
 		}
