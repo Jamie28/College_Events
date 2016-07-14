@@ -1,4 +1,5 @@
 <?php
+if (loggedIn () && isAdmin()) {
 include ("header.php");
 ?>
 <h2>Approve Event</h2>
@@ -181,4 +182,5 @@ if (loggedIn () && isSuperAdmin()) {
 } else {
 	// Go home
 	header ( "Location: index.php" );
+}
 }

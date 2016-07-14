@@ -31,7 +31,7 @@ padding: 0;
   <br><br>
   Description: <input type = "text" name = "evt_description" value="">
    <br><br>  
-  Contact Phone (e.g. 4073328888): <input type = "text" name = "evt_contact" value="" >
+  Contact Phone (e.g. 407-332-8888): <input type = "text" name = "evt_contact" value="" >
   <span class="error">* </span><br><br> 
   Location: <input type = "text" name = "lat" id="lat" value="28.601492">
   <input type = "text" name = "lng" id="lng" value="-81.200140">
@@ -85,5 +85,3 @@ padding: 0;
 </form>
 </body>
 </html>
-		
-	

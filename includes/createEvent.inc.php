@@ -1,6 +1,8 @@
 <?php
 	session_start();
+	if (loggedIn () && isAdmin()) {
 	include 'functions.inc.php';
+	
 	
 	$nameErr = $dateErr = $timeErr = $contactErr = $descErr = $locationErr = NULL;
 	
@@ -95,6 +97,7 @@
 			echo "$descErr<br>";
 		if (!($locationErr == NULL))
 			echo "$locationErr<br>";	
+	}
 	}
 	
 ?>
