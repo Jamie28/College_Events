@@ -11,7 +11,7 @@
 				<button type='submit'>Create University</button>
 				</form>";
 			// Approve Events
-			echo "<form method='get' action='approveEvents.php'>
+			echo "<form method='get' action='approveEvent.php'>
 				<button type='submit'>Approve Events</button>
 				</form>";
 		}
