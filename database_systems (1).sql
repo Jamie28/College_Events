@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2016 at 10:20 PM
+-- Generation Time: Jul 14, 2016 at 11:12 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -36,7 +36,8 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`uid`) VALUES
 (2),
-(3);
+(3),
+(21);
 
 -- --------------------------------------------------------
 
@@ -96,11 +97,30 @@ CREATE TABLE `in_rso` (
 INSERT INTO `in_rso` (`uid`, `rso_id`, `since`) VALUES
 (3, 3, '2016-07-11 22:15:47'),
 (8, 3, '2016-07-11 22:16:55'),
+(8, 5, '2016-07-14 20:38:20'),
 (9, 3, '2016-07-11 22:15:47'),
+(9, 5, '2016-07-14 20:38:20'),
 (10, 3, '2016-07-11 22:15:47'),
+(10, 5, '2016-07-14 20:38:20'),
 (11, 3, '2016-07-11 22:15:47'),
+(11, 5, '2016-07-14 20:38:20'),
 (12, 1, '2016-07-11 23:16:28'),
-(12, 2, '2016-07-11 23:16:29');
+(12, 2, '2016-07-11 23:16:29'),
+(21, 5, '2016-07-14 20:38:20');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `locations`
+--
+
+CREATE TABLE `locations` (
+  `lid` int(11) NOT NULL,
+  `name` varchar(60) NOT NULL,
+  `address` varchar(80) NOT NULL,
+  `lat` float(10,6) NOT NULL,
+  `lng` float(10,6) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -167,7 +187,8 @@ INSERT INTO `person` (`uid`, `username`, `password`, `email`) VALUES
 (17, NULL, NULL, NULL),
 (18, NULL, NULL, NULL),
 (19, NULL, NULL, NULL),
-(20, NULL, NULL, NULL);
+(20, NULL, NULL, NULL),
+(21, 'james', '8', 'james@ucf.edu');
 
 -- --------------------------------------------------------
 
@@ -226,18 +247,20 @@ CREATE TABLE `ratings` (
 CREATE TABLE `rso` (
   `rso_id` int(11) NOT NULL,
   `rso_name` varchar(50) DEFAULT NULL,
-  `unv_id` int(11) NOT NULL
+  `unv_id` int(11) NOT NULL,
+  `owner_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rso`
 --
 
-INSERT INTO `rso` (`rso_id`, `rso_name`, `unv_id`) VALUES
-(1, 'Math Club', 1),
-(2, 'Sports Club', 1),
-(3, 'Dodgeball Club', 1),
-(4, 'UF Club', 2);
+INSERT INTO `rso` (`rso_id`, `rso_name`, `unv_id`, `owner_id`) VALUES
+(1, 'Math Club', 1, 0),
+(2, 'Sports Club', 1, 0),
+(3, 'Dodgeball Club', 1, 0),
+(4, 'UF Club', 2, 0),
+(5, 'Coding Club', 1, 21);
 
 -- --------------------------------------------------------
 
@@ -283,6 +306,7 @@ INSERT INTO `student` (`uid`, `unv_id`) VALUES
 (10, 1),
 (11, 1),
 (12, 1),
+(21, 1),
 (13, 2),
 (7, 4);
 
@@ -355,6 +379,12 @@ ALTER TABLE `comments`
 --
 ALTER TABLE `in_rso`
   ADD PRIMARY KEY (`uid`,`rso_id`);
+
+--
+-- Indexes for table `locations`
+--
+ALTER TABLE `locations`
+  ADD PRIMARY KEY (`lid`);
 
 --
 -- Indexes for table `my_event`
@@ -432,6 +462,11 @@ ALTER TABLE `university`
 ALTER TABLE `approve_e`
   MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
+-- AUTO_INCREMENT for table `locations`
+--
+ALTER TABLE `locations`
+  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `my_event`
 --
 ALTER TABLE `my_event`
@@ -440,12 +475,12 @@ ALTER TABLE `my_event`
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `rso`
 --
 ALTER TABLE `rso`
-  MODIFY `rso_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `rso_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `university`
 --
