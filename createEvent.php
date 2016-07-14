@@ -6,7 +6,7 @@
 #map {
 width: 40%;
 height: 400px;}
-#latlng {
+#lat, #lng {
 width: 75px;}
 html, body {
 height: 100%;
@@ -33,19 +33,38 @@ padding: 0;
    <br><br>  
   Contact Phone (e.g. 4073328888): <input type = "text" name = "evt_contact" value="" >
   <span class="error">* </span><br><br> 
-  Location: <input type = "text" name = "lat" id="latlng" value="28.601492">
-  <input type = "text" name = "lng" id="latlng" value="-81.200140">
+  Location: <input type = "text" name = "lat" id="lat" value="28.601492">
+  <input type = "text" name = "lng" id="lng" value="-81.200140">
   <span class="error">* </span><br><br> 
   <div id="map"></div>
   <div id="capture"></div>
   <script>
 	var map;
+	var defLatLng = {lat: 28.601492, lng: -81.200140};
+	var marker;
 	function initMap() {
 		map = new google.maps.Map(document.getElementById('map'), {
 			center: {lat: 28.601492, lng: -81.200140},
 			zoom: 15
 		});
+
+	marker = new google.maps.Marker({
+		position: defLatLng,
+		map: map
+		});
+
+	google.maps.event.addListener(map, 'click', function(event) {
+		addMarker(event.latLng, map);
+	});
+	
 	}
+
+	function addMarker(location, map){
+		marker.setPosition(location);
+		document.getElementById("lat").value = location.lat();
+		document.getElementById("lng").value = location.lng();
+	}
+	
   </script>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ_F7TCpsW-MDsigvIsqdVeoE6hOfa__0&callback=initMap">
