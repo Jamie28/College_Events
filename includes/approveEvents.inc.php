@@ -1,5 +1,4 @@
 <?php include "functions.inc.php";?>
-
 <div id="page">
 	Event was successfully approved/declined.
 </div>

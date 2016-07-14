@@ -40,6 +40,9 @@
 			echo "<form method='get' action='joinRSO.php'>
 				<button type='submit'>Join RSO</button>
 				</form>";
+			echo "<form method='get' action='include\events.inc.php'>
+				<button type='submit'>Event Info</button>
+				</form>";
 			// Create rso
 			echo "<form method='get' action='createRSO.php'>
 				<button type='submit'>Create RSO</button>
@@ -50,3 +53,7 @@
 				</form>";
 		}
 	}
+	
+	?>
+	
+	

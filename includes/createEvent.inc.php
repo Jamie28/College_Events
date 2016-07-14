@@ -1,6 +1,5 @@
 <?php
 	session_start();
-	
 	include 'functions.inc.php';
 	
 	$nameErr = $dateErr = $timeErr = $contactErr = $descErr = $locationErr = NULL;
@@ -11,7 +10,6 @@
 			$nameErr = "Event name is required";
 		} else {
 			$evt_name = test_input($_POST['evt_name']);
-			// check if name only contains letters and whitespace
 			if (!preg_match("/^[a-zA-Z ]*$/",$evt_name)) {
 				$nameErr = "Only letters and white space allowed";
 			}
@@ -94,11 +92,7 @@
 		if(!($descErr==NULL))
 			echo "$descErr<br>";
 		if (!($locationErr == NULL))
-			echo "$locationErr<br>";
-		
-		
+			echo "$locationErr<br>";	
 	}
-	?>
-	<br><br>
-<a href="../createEvent.php">Return</a>
-</body>
+	
+?>
