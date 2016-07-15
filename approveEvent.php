@@ -1,8 +1,7 @@
-<?php
-if (loggedIn () && isAdmin()) {
-include ("header.php");
-?>
-<h2>Approve Event</h2>
+<?php include ("header.php");?>
+
+<h2>Approve Events</h2>
+
 <?php
 
 // This page allows for the superadmin to approve events made by individual students
@@ -12,8 +11,7 @@ if (loggedIn () && isSuperAdmin()) {
 	
 	include 'dbhandler.php';
 	
-	// Find rso events
-	
+	// Find rso events	
 	$sql = "SELECT * FROM approve_e WHERE approved ='0'";
 	$response = mysqli_query ( $link, $sql );
 	

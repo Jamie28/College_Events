@@ -1,13 +1,8 @@
 <?php
-	session_start();
-	if (loggedIn () && isAdmin()) {
+	session_start();	
 	include 'functions.inc.php';
-	
-	
 	$nameErr = $dateErr = $timeErr = $contactErr = $descErr = $locationErr = NULL;
-	
 	if (loggedIn() && isAdmin()){
-		
 		if (empty($_POST['evt_name'])) {
 			$nameErr = "Event name is required";
 		} else {
@@ -16,37 +11,31 @@
 				$nameErr = "Only letters and white space allowed";
 			}
 		}
-	
 		if (empty($_POST['evt_time'])) {
 			$timeErr = "Event time is required";
 		} else{
 			$evt_time = test_input($_POST['evt_time']);
 		}
-	
 		if (empty($_POST['evt_date'])) {
 			$dateErr = "Event date is required";
 		} else {
 			$evt_date = test_input($_POST['evt_date']);
 		}
-	
 		if (empty($_POST['evt_comment'])) {
 			$comment = "";
 		} else {
 			$evt_comment = test_input($_POST['evt_comment']);
 		}
-	
 		if (empty($_POST['evt_description'])) {
 			$descErr = "Event description is required";
 		} else {
 			$evt_description = test_input($_POST['evt_description']);
 		}
-		
 		if (empty($_POST['evt_contact'])) {
 			$contactErr = "A contact is required";
 		} else {
 			$evt_contact = test_input($_POST['evt_contact']);
 		}
-		
 		if (empty($_POST['lat']) || empty($_POST['lng'])) {
 			$locationErr = "Event location is required";
 		} else {
@@ -55,7 +44,6 @@
 			$address = test_input($_POST['address']);
 		}
 	}		
-	
 	function test_input($data) {
 		$data = trim($data);
 		$data = stripslashes($data);
@@ -63,9 +51,7 @@
 		return $data;
 	}
 	if((($nameErr == NULL) && ($timeErr == NULL) && ($dateErr == NULL) && ($locationErr == NULL))){
-		
 		include '../dbhandler.php';
-		
 		$insert = "INSERT INTO my_event (evt_id, evt_time, evt_comment, evt_date, evt_contact, evt_name, evt_description, location) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		$stmt = mysqli_prepare($link, $insert);
 		$evt_id = NULL;
@@ -73,12 +59,10 @@
 				$evt_time, $evt_comment, $evt_date, $evt_contact, $evt_name, $evt_description, $location);
 		mysqli_stmt_execute($stmt);
 		$affected_rows = mysqli_stmt_affected_rows($stmt);
-		if ($affected_rows == 1)
-		{
+		if ($affected_rows == 1){
 			$_SESSION['error'] = 2;
 		}
-		else
-		{
+		else{
 			$_SESSION['error'] = 8;
 		}
 		mysqli_stmt_close($stmt);
@@ -98,6 +82,4 @@
 		if (!($locationErr == NULL))
 			echo "$locationErr<br>";	
 	}
-	}
-	
 ?>
