@@ -51,37 +51,33 @@
 			echo 'We are unable to process your request. Please try again later';
 		}
 	}
-	function listRSOEvents() {
 	
+	function listRSOEvents() {
 		include "dbhandler.php";
 		try
 		{
 			$dbh = new PDO("mysql:host=$server;dbname=$db_name", $user, $pass);
 			$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$stmt = $dbh->prepare("SELECT e.evt_name, e.evt_description, e.evt_time, e.location, e.evt_contact, e.evt_id, p.rso_e FROM events e, in_rso s, rso_e p WHERE s.rso_id = p.rso_id AND e.evt_id = p.evt_id AND s.uid = :uid");
+			$stmt = $dbh->prepare("SELECT e.evt_name, e.evt_description, e.evt_time, e.evt_date, e.evt_contact, e.evt_id FROM my_event e, in_rso r, rso_e p WHERE e.evt_id = p.evt_id AND p.rso_id = r.rso_id AND r.uid = :uid");
 			$stmt->bindParam(':uid', $_SESSION['uid'], PDO::PARAM_INT);
 			$stmt->execute();
-	
+
 			while($row = $stmt->fetch(PDO::FETCH_ASSOC))
 			{
-				$event_id = $row['event_id'];
-				echo "<a href='events.php?evt_id=$evt_id'>". $row['evt_name'] . "</a>". "\t" . $row['evt_description'] . "\t" . $row['evt_time'] . "\t" . $row['location'] . "\t" . $row['evt_comment'] . "<br><br>";
-				$data = $row['evt_name'] . "\t" . $row['evt_description'] . "\n";
-				print $data;
+				$evt_id = $row['evt_id'];
+			echo "<a href='events.php?evt_id=$evt_id'>" . $row['evt_name'] . "</a><br>" . $row['evt_description'] . "<br>" . "Contact: " . $row['evt_contact'] . "<br>" . "When: " . $row['evt_date'] . "<br><br>";
 			}
-	
 			$stmt = null;
 		}
 		catch(Exception $e)
 		{
 			echo 'We are unable to process your request. Please try again later';
 		}
-	
 	}
 ?>
 	
 	<!-- show public event -->
-		<center><p class="body"> PUBLIC EVENTS
+		<center><p class="body"><U>PUBLIC EVENTS</U>
 		<br><br>
 		
 			<?php
@@ -99,7 +95,7 @@
 			<div id="page">
 		
 		
-		<center><p class="body"> PRIVATE EVENTS
+		<center><p class="body"> <U>PRIVATE EVENTS</U>
 		
 		<br><br>
 		
@@ -110,7 +106,7 @@
 			
 		</p>
 		
-		<center><p class="body"> RSO EVENTS
+		<center><p class="body"> <U>RSO EVENTS</U>
 		
 		<br><br>
 		
