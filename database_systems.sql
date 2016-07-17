@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 15, 2016 at 03:39 AM
+-- Generation Time: Jul 17, 2016 at 09:52 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -100,14 +100,22 @@ INSERT INTO `in_rso` (`uid`, `rso_id`, `since`) VALUES
 (8, 5, '2016-07-14 20:38:20'),
 (9, 3, '2016-07-11 22:15:47'),
 (9, 5, '2016-07-14 20:38:20'),
+(9, 6, '2016-07-15 20:32:15'),
 (10, 3, '2016-07-11 22:15:47'),
 (10, 5, '2016-07-14 20:38:20'),
+(10, 6, '2016-07-15 20:32:15'),
 (11, 3, '2016-07-11 22:15:47'),
 (11, 5, '2016-07-14 20:38:20'),
+(11, 6, '2016-07-15 20:32:15'),
 (12, 1, '2016-07-11 23:16:28'),
 (12, 2, '2016-07-11 23:16:29'),
-(21, 5, '2016-07-14 20:38:20');
+(12, 6, '2016-07-15 20:32:15'),
+(21, 2, '2016-07-17 19:40:56'),
+(21, 3, '2016-07-17 19:40:57'),
+(21, 5, '2016-07-14 20:38:20'),
+(21, 6, '2016-07-15 20:32:15');
 
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `locations`
@@ -132,7 +140,7 @@ CREATE TABLE `my_event` (
   `evt_time` time NOT NULL,
   `evt_comment` text NOT NULL,
   `evt_date` date NOT NULL,
-  `evt_contact` varchar(12) NOT NULL,
+  `evt_contact` varchar(10) NOT NULL,
   `evt_name` varchar(50) NOT NULL,
   `evt_description` varchar(50) DEFAULT NULL,
   `location` varchar(50) NOT NULL
@@ -147,9 +155,7 @@ INSERT INTO `my_event` (`evt_id`, `evt_time`, `evt_comment`, `evt_date`, `evt_co
 (2, '18:29:41', 'Pokemon Go event by the reflection pond', '2016-07-28', '352-555-55', 'Pokemon Go', 'Freshman Event', 'UCF'),
 (3, '15:45:55', 'Freshman Social Hour', '2016-08-02', '6678893211', 'Social Hour', 'Free Lunch', 'UCF'),
 (4, '15:44:06', 'Music Included', '2016-08-03', '1234567892', 'Hokie Pokie', 'Competition', 'UCF'),
-(5, '17:00:00', 'Resume Needed', '2016-08-03', '1124566786', 'CWEP Info Session', 'Lockheed Martin Info', 'UCF'),
-(6, '15:03:00', 'Free Event', '2016-07-19', '2234567771', 'Football Frenzie', 'Competition', 'UCF'),
-(7, '14:09:00', 'All night', '2016-08-04', '407-231-4444', 'Study Session', 'Study Group For Calculus', 'UCF');
+(5, '17:00:00', 'Resume Needed', '2016-08-03', '1124566786', 'CWEP Info Session', 'Lockheed Martin Info', 'UCF');
 
 -- --------------------------------------------------------
 
@@ -207,9 +213,7 @@ CREATE TABLE `private` (
 --
 
 INSERT INTO `private` (`evt_id`, `unv_id`) VALUES
-(7, 1),
-(3, 1),
-(5, 2);
+(3, 1);
 
 -- --------------------------------------------------------
 
@@ -263,7 +267,8 @@ INSERT INTO `rso` (`rso_id`, `rso_name`, `unv_id`, `owner_id`) VALUES
 (2, 'Sports Club', 1, 0),
 (3, 'Dodgeball Club', 1, 0),
 (4, 'UF Club', 2, 0),
-(5, 'Coding Club', 1, 21);
+(5, 'Coding Club', 1, 21),
+(6, 'Yoder''s Club', 1, 21);
 
 -- --------------------------------------------------------
 
@@ -281,11 +286,7 @@ CREATE TABLE `rso_e` (
 --
 
 INSERT INTO `rso_e` (`evt_id`, `rso_id`) VALUES
-(1, 3),
-(2, 3),
-(3, 4),
-(1, 1),
-(5, 1);
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -333,6 +334,17 @@ CREATE TABLE `s_admin` (
 
 INSERT INTO `s_admin` (`uid`) VALUES
 (1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `takes_place`
+--
+
+CREATE TABLE `takes_place` (
+  `evt_id` int(11) NOT NULL,
+  `lid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -386,7 +398,7 @@ ALTER TABLE `comments`
 --
 ALTER TABLE `in_rso`
   ADD PRIMARY KEY (`uid`,`rso_id`);
-  
+
 --
 -- Indexes for table `locations`
 --
@@ -453,6 +465,12 @@ ALTER TABLE `s_admin`
   ADD PRIMARY KEY (`uid`);
 
 --
+-- Indexes for table `takes_place`
+--
+ALTER TABLE `takes_place`
+  ADD PRIMARY KEY (`evt_id`,`lid`);
+
+--
 -- Indexes for table `university`
 --
 ALTER TABLE `university`
@@ -477,7 +495,7 @@ ALTER TABLE `locations`
 -- AUTO_INCREMENT for table `my_event`
 --
 ALTER TABLE `my_event`
-  MODIFY `evt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `evt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `person`
 --
@@ -487,7 +505,7 @@ ALTER TABLE `person`
 -- AUTO_INCREMENT for table `rso`
 --
 ALTER TABLE `rso`
-  MODIFY `rso_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `rso_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `university`
 --
