@@ -1,3 +1,3 @@
 <div id="page">
-Request Submitted.
+Comment Submitted.
 </div>

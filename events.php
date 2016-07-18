@@ -1,5 +1,5 @@
 <?php
-session_start();
+include ("header.php");
 $location = "UCF";
 
 function listEventInfo() {
@@ -25,7 +25,7 @@ function listEventInfo() {
 	}
 }
 
-function listCommentsAndRatings() {
+/*function listCommentsAndRatings() {
 	include "dbhandler.php";
 	try{
 		$dbh = new PDO("mysql:host=$server;dbname=$db_name", $user, $pass);
@@ -57,14 +57,16 @@ function listCommentsAndRatings() {
 					 echo output;
 				}
 		    }
-}?>
+}*/
+?>
+
 <div id="page">
 	<br><br><center><div class="logo"><a href="index.php" style="text-decoration: none; 
-	color: #333333;">College Event Website</a></div></center>		
+	color: #333333;">College Events</a></div></center>		
 		<?php 
 			listEventInfo();
 			echo "<br>";
-			listCommentsAndRatings();
+			//listCommentsAndRatings();
 		?>
 	<div id="page">
 			<form>
@@ -74,7 +76,7 @@ function listCommentsAndRatings() {
 						<td> <input type="text" id="comment" name="comment" value="" maxlength="150" /> </td></tr>
 <!--					<td> <input type="text" name="" value=""> </td></tr>-->
 			</form>
-			<form method="get" action="../comment_submitted.php">
+			<form method="get" action="comment_submitted.php">
 					<tr><td><input type="submit" value="Submit"> </td></tr>
 				</table>
 			</form>
@@ -84,7 +86,7 @@ function listCommentsAndRatings() {
 			width="600"
 			height="450"
 			frameborder="0" style="border:0"
-			src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA-bycgCKodNWMCGD9CUspU9ZC7aGxmHbk
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ_F7TCpsW-MDsigvIsqdVeoE6hOfa__0&callback=initMap"
 			&q=<?php echo $location ?>
 			&attribution_source=Google+Maps+Embed+API
 			&attribution_web_url=http://www.butchartgardens.com/

@@ -48,6 +48,7 @@
 			echo "<form method='get' action='viewEvents.php'>
 				<button type='submit'>View Events</button>
 				</form>";
+			//Comments and Ratings
 			echo "<form method='get' action='events.php'>
 				<button type='submit'>Comments and Ratings</button>
 				</form>";
