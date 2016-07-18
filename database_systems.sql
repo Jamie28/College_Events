@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2016 at 09:52 PM
+-- Generation Time: Jul 18, 2016 at 05:34 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -123,7 +123,6 @@ INSERT INTO `in_rso` (`uid`, `rso_id`, `since`) VALUES
 
 CREATE TABLE `locations` (
   `lid` int(11) NOT NULL,
-  `name` varchar(60) NOT NULL,
   `address` varchar(80) NOT NULL,
   `lat` float(10,6) NOT NULL,
   `lng` float(10,6) NOT NULL

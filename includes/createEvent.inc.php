@@ -52,12 +52,14 @@
 	}
 	if((($nameErr == NULL) && ($timeErr == NULL) && ($dateErr == NULL) && ($locationErr == NULL))){
 		include '../dbhandler.php';
-		$insert = "INSERT INTO my_event (evt_id, evt_time, evt_comment, evt_date, evt_contact, evt_name, evt_description, location) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		$insert = "INSERT INTO my_event (evt_id, evt_time, evt_comment, evt_date, evt_contact, evt_name, evt_description) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		$stmt = mysqli_prepare($link, $insert);
 		$evt_id = NULL;
-		mysqli_stmt_bind_param($stmt, "isssssss", $evt_id,
-				$evt_time, $evt_comment, $evt_date, $evt_contact, $evt_name, $evt_description, $location);
+		mysqli_stmt_bind_param($stmt, "issssss", $evt_id,
+				$evt_time, $evt_comment, $evt_date, $evt_contact, $evt_name, $evt_description);
 		mysqli_stmt_execute($stmt);
+		$evt_id = mysqli_insert_id($link);
 		$affected_rows = mysqli_stmt_affected_rows($stmt);
 		if ($affected_rows == 1){
 			$_SESSION['error'] = 2;
@@ -66,6 +68,23 @@
 			$_SESSION['error'] = 8;
 		}
 		mysqli_stmt_close($stmt);
+		
+		$insertLoc = "INSERT INTO locations (lid, lat, lng, address)
+					  VALUES (?, ?, ?, ?)";
+		$stmt = mysqli_prepare($link, $insertLoc);
+		$lid = NULL;
+		mysqli_stmt_bind_param($stmt, "idds", $lid, $lat, $lng, $address);
+		mysqli_stmt_execute($stmt);
+		$lid = mysqli_insert_id($link);
+		mysqli_stmt_close($stmt);
+		
+		$insertAt = "INSERT INTO takes_place (evt_id, lid)
+					 VALUES (?, ?)";
+		$stmt = mysqli_prepare($link, $insertAt);
+		mysqli_stmt_bind_param($stmt, "ii", $evt_id, $lid);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+		
 		mysqli_close($link);
 		header("Location: ../index.php");
 	}else {
