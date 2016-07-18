@@ -1,5 +1,6 @@
 <?php
-	session_start();
+	include "dbhandler.php";
+	include "events.php";
 	$comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
 	try{
 		$dbh = new PDO("mysql:host=$server;dbname=$db_name", $user, $pass);
