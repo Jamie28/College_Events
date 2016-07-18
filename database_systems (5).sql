@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2016 at 05:34 PM
+-- Generation Time: Jul 19, 2016 at 01:36 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -51,6 +51,14 @@ CREATE TABLE `approve_e` (
   `approved` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `ratings` (
+  `rating` int(11) NOT NULL,
+  `comment_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `ratings` (`rating`, `comment_id`) VALUES
+(5, 1);
+
 --
 -- Dumping data for table `approve_e`
 --
@@ -76,7 +84,8 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`comment_id`, `evt_id`, `uid`, `text`) VALUES
-(1, 1, 6, 'This was such a fun event...I will definitely be going next Year!!');
+(1, 1, 7, 'This was such a fun event...I will definitely be going next Year!!'),
+(2, 1, 7, 'This is a test comment.');
 
 -- --------------------------------------------------------
 
@@ -231,18 +240,6 @@ CREATE TABLE `public` (
 
 INSERT INTO `public` (`evt_id`, `unv_id`) VALUES
 (1, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ratings`
---
-
-CREATE TABLE `ratings` (
-  `rating` int(11) NOT NULL,
-  `comment_id` int(11) NOT NULL,
-  `evt_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -430,12 +427,6 @@ ALTER TABLE `private`
 ALTER TABLE `public`
   ADD PRIMARY KEY (`evt_id`),
   ADD KEY `unv_id` (`unv_id`);
-
---
--- Indexes for table `ratings`
---
-ALTER TABLE `ratings`
-  ADD PRIMARY KEY (`comment_id`);
 
 --
 -- Indexes for table `rso`
