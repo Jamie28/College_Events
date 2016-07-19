@@ -53,8 +53,9 @@ function listCommentsAndRatings() {
 	<br><br>
 			<form>
 				<table>
-					<tr><td> Add Comment: <textarea name="evt_comment" rows="5" cols="40" maxlength="150"></textarea><br><br> 
-			</form>
+					<tr><td> <label for="text">Add Comment:</label> </td>
+						<td> <input type="text" id="comment" name="comment" value="" maxlength="150" /> </td></tr>
+				</form>
 			<form method="get" action="comment.php">
 					<tr><td><input type="submit" value="Submit"> </td></tr>
 				</table>

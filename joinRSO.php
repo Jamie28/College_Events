@@ -73,6 +73,8 @@ if (loggedIn () && isset($_SESSION['unv_id'])) {
 <br><br>
 <br><br>
 <br><br><br>
+<br><br><br>
+<br><br><br>
 
 	<a href="index.php">Return</a>
 	</body>

@@ -49,7 +49,7 @@
 				<button type='submit'>View Events</button>
 				</form>";
 			//Comments and Ratings
-			echo "<form method='get' action='events.php'>
+			echo "<form method='get' action='viewCommRatings.php'>
 				<button type='submit'>Comments and Ratings</button>
 				</form>";
 		}
