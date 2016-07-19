@@ -59,6 +59,8 @@ CREATE TABLE `ratings` (
 INSERT INTO `ratings` (`rating`, `comment_id`) VALUES
 (5, 1);
 
+ALTER TABLE `ratings`
+  ADD PRIMARY KEY (`comment_id`);
 --
 -- Dumping data for table `approve_e`
 --
