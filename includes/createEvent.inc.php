@@ -1,7 +1,7 @@
 <?php
 	session_start();	
 	include 'functions.inc.php';
-	$nameErr = $dateErr = $timeErr = $contactErr = $descErr = $locationErr = NULL;
+	$nameErr = $dateErr = $timeErr = $contactErr = $descErr = $locationErr = $eventTypeErr = NULL;
 	if (loggedIn() && isAdmin()){
 		if (empty($_POST['evt_name'])) {
 			$nameErr = "Event name is required";
@@ -20,6 +20,11 @@
 			$dateErr = "Event date is required";
 		} else {
 			$evt_date = test_input($_POST['evt_date']);
+		}
+		if (empty($_POST['event_type'])) {
+			$eventTypeErr = "Event type is required"; 
+		} else {
+			$event_type = $_POST['event_type'];
 		}
 		if (empty($_POST['evt_comment'])) {
 			$comment = "";
@@ -69,6 +74,34 @@
 		}
 		mysqli_stmt_close($stmt);
 		
+		if($event_type == "public" || $event_type == "private"){
+			$insert = "INSERT INTO " . $event_type . " (evt_id, unv_id) VALUES (?, ?)";
+			$stmt = mysqli_prepare($link, $insert);
+			mysqli_stmt_bind_param($stmt, "ii", $evt_id, $_SESSION['unv_id']);
+			mysqli_stmt_execute($stmt);
+			mysqli_stmt_close($stmt);
+			
+			$insert = "INSERT INTO approve_e (aid, approved, evt_id) VALUES (?, ?, ?)";
+			$stmt = mysqli_prepare($link, $insert);
+			$aid = NULL;
+			$approved = 0;
+			mysqli_stmt_bind_param($stmt, "iii", $aid, $approved, $evt_id);
+			mysqli_stmt_execute($stmt);
+			mysqli_stmt_close($stmt);
+		}else {
+			$sql = "SELECT r.rso_id
+					FROM rso r
+					WHERE r.rso_name = '".$event_type."' ";
+			$res = mysqli_query($link, $sql);
+			$row = mysqli_fetch_array($res);
+			
+			$insert = "INSERT INTO rso_e (evt_id, rso_id) VALUES (?, ?)";
+			$stmt = mysqli_prepare($link, $insert);
+			mysqli_stmt_bind_param($stmt, "ii", $evt_id, $row['rso_id']);
+			mysqli_stmt_execute($stmt);
+			mysqli_stmt_close($stmt);
+		}
+		
 		$insertLoc = "INSERT INTO locations (lid, lat, lng, address)
 					  VALUES (?, ?, ?, ?)";
 		$stmt = mysqli_prepare($link, $insertLoc);
@@ -98,7 +131,9 @@
 			echo "$contactErr<br>";
 		if(!($descErr==NULL))
 			echo "$descErr<br>";
-		if (!($locationErr == NULL))
-			echo "$locationErr<br>";	
+		if(!($locationErr == NULL))
+			echo "$locationErr<br>";
+		if(!($eventTypeErr == NULL))
+			echo "$eventTypeErr<br>";
 	}
 ?>

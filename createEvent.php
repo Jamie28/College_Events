@@ -27,7 +27,24 @@ padding: 0;
   <span class="error">* </span><br><br>
   Date: <input type = "date" name = "evt_date" value="" >
   <span class="error">* </span><br><br>
-  Comments: <textarea name="evt_comment" rows="5" cols="40"></textarea><br><br> 
+  Type: <select name="event_type" id="event_type">
+  <option value="public">Public</option>
+  <option value="private">Private</option>
+  <?php 
+  include "dbhandler.php";
+  $sql = "SELECT r.rso_name
+		  FROM rso r
+		  WHERE r.owner_id = '".$_SESSION['uid']."' ";
+  $res = mysqli_query($link, $sql);
+  
+  while($row = mysqli_fetch_array($res))
+  {
+  	$rsoname = $row['rso_name'];
+  	echo "<option value=\"$rsoname\"> $rsoname </option>";
+  }
+  ?>
+  </select><br><br>
+  Comments: <br><br> <textarea name="evt_comment" rows="5" cols="40"></textarea><br><br> 
   Description: <input type = "text" name = "evt_description" value=""><br><br>    
   Contact Phone (e.g. 407-332-8888): <input type = "text" name = "evt_contact" value="" >
   <span class="error">* </span><br><br> 
