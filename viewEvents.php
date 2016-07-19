@@ -11,7 +11,7 @@
 	
 			while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 				$evt_id = $row['evt_id'];
-				echo "<a href='events.php?evt_id=$evt_id'>" . $row['evt_name'] . "</a><br>" . $row['evt_description'] . "<br>" . "Contact: " . $row['evt_contact'] . "<br>" . "When: " . $row['evt_date'] . "<br>";
+				echo "<a href='events.php?evt_id=$evt_id'>" . $row['evt_name'] . "</a><br>" . $row['evt_description'] . "<br>" . "Contact: " . $row['evt_contact'] . "<br>" . "When: " . $row['evt_date'] . "<br><br>";
 			}
 			$stmt = null;
 		}

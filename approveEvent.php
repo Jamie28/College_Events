@@ -181,4 +181,3 @@ if (loggedIn () && isSuperAdmin()) {
 	// Go home
 	header ( "Location: index.php" );
 }
-}
