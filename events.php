@@ -1,5 +1,6 @@
 <?php
 include "header.php";
+$evt_id = $_GET['evt_id'];
 function listEventInfo() {
 	
 	include "dbhandler.php";
@@ -38,20 +39,16 @@ function listCommentsAndRatings() {
 	include "dbhandler.php";
 	try{
 		$evt_id = $_GET['evt_id'];
-		$sql = "SELECT c.text, r.rating, p.username
-				FROM comments c, ratings r, person p
-				WHERE c.evt_id = '".$evt_id."' AND c.comment_id = r.comment_id AND p.uid = c.uid";
+		$sql = "SELECT c.text, p.username
+				FROM comments c, person p
+				WHERE c.evt_id = '".$evt_id."' AND p.uid = c.uid";
 		$res = mysqli_query($link, $sql);
 		
-		//$dbh = new PDO("mysql:host=$server;dbname=$db_name", $user, $pass);
-		//$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		//$stmt = $dbh->prepare("SELECT c.text, r.rating FROM comments c, ratings r, my_event e, public p WHERE e.evt_id = p.evt_id AND p.evt_id = c.evt_id AND r.comment_id = c.comment_id");
-		//$stmt->bindParam(':evt_id', $_GET['evt_id'], PDO::PARAM_INT);
-		//$stmt->execute();
-		//$result = $stmt->fetch(PDO::FETCH_ASSOC);
 		echo "<h3>Comments: </h3>";
 		while($result = mysqli_fetch_array($res, MYSQLI_ASSOC)){
-			echo $result['text'] . "    " . "Rating: " .$result['rating'] . "\n";
+			echo "<h5>" . $result['username'] . "</h5>";
+			echo $result['text'] . "\n";
+			echo "<hr>";
 		}
 		$stmt = null;
 	}
@@ -108,12 +105,10 @@ height: 400px;}
 		?>
 	<div id="page">
 	<br><br>
-			<form>
+			<form method="post" action="comment.php?evt_id=<?php echo $evt_id; ?>">
 				<table>
-					<tr><td> <label for="text">Add Comment:</label> </td>
-						<td> <input type="text" id="comment" name="comment" value="" maxlength="150" /> </td></tr>
-			</form>
-			<form method="post" action="comment.php">
+					<tr><td><label for="text">Add Comment:</label> </td> </tr>
+					<tr><td><textarea rows="4" cols="50" id="comment" name="comment" value="" maxlength="150"></textarea></td></tr>
 					<tr><td><input type="submit" value="Submit"> </td></tr>
 				</table>
 			</form>
