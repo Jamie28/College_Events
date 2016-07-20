@@ -37,14 +37,20 @@ function listEventInfo() {
 function listCommentsAndRatings() {
 	include "dbhandler.php";
 	try{
-		$dbh = new PDO("mysql:host=$server;dbname=$db_name", $user, $pass);
-		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$stmt = $dbh->prepare("SELECT c.text, r.rating FROM comments c, ratings r, my_event e, public p WHERE e.evt_id = p.evt_id AND p.evt_id = c.evt_id AND r.comment_id = c.comment_id");
-		$stmt->bindParam(':evt_id', $_GET['evt_id'], PDO::PARAM_INT);
-		$stmt->execute();
-		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+		$evt_id = $_GET['evt_id'];
+		$sql = "SELECT c.text, r.rating, p.username
+				FROM comments c, ratings r, person p
+				WHERE c.evt_id = '".$evt_id."' AND c.comment_id = r.comment_id AND p.uid = c.uid";
+		$res = mysqli_query($link, $sql);
+		
+		//$dbh = new PDO("mysql:host=$server;dbname=$db_name", $user, $pass);
+		//$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		//$stmt = $dbh->prepare("SELECT c.text, r.rating FROM comments c, ratings r, my_event e, public p WHERE e.evt_id = p.evt_id AND p.evt_id = c.evt_id AND r.comment_id = c.comment_id");
+		//$stmt->bindParam(':evt_id', $_GET['evt_id'], PDO::PARAM_INT);
+		//$stmt->execute();
+		//$result = $stmt->fetch(PDO::FETCH_ASSOC);
 		echo "<h3>Comments: </h3>";
-		while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+		while($result = mysqli_fetch_array($res, MYSQLI_ASSOC)){
 			echo $result['text'] . "    " . "Rating: " .$result['rating'] . "\n";
 		}
 		$stmt = null;
