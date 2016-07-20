@@ -1,7 +1,7 @@
 <?php
 	include "dbhandler.php";
 	include "events.php";
-	$comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
+	$comment = filter_var($_GET['comment'], FILTER_SANITIZE_STRING);
 	try{
 		$dbh = new PDO("mysql:host=$server;dbname=$db_name", $user, $pass);
 		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
