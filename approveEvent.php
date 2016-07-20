@@ -44,7 +44,7 @@ if (loggedIn () && isSuperAdmin()) {
 				$res = mysqli_query ( $link, $sql );
 				
 				// if there is a private event, get the result array
-				if ($res)
+				if (mysqli_num_rows($res) > 0)
 				{
 					$private = mysqli_fetch_array($res);
 					$isPrivate = true;
@@ -108,7 +108,7 @@ if (loggedIn () && isSuperAdmin()) {
 		// mysqli_fetch_array will return a row of data from the query
 		// until no further data is available
 		while ( $approve_e = mysqli_fetch_array ( $response ) ) {
-				
+			
 			if ($approve_e['approved'] == 1)
 			{
 				// The event needs to be approved
@@ -122,7 +122,7 @@ if (loggedIn () && isSuperAdmin()) {
 				$res = mysqli_query ( $link, $sql );
 				
 				// if there is a private event, get the result array
-				if ($res)
+				if (mysqli_num_rows($res) > 0)
 				{
 					$private = mysqli_fetch_array($res);
 					$isPrivate = true;
