@@ -12,7 +12,7 @@ function listEventInfo() {
 					       (r.evt_id = '".$evt_id."')) ";
 		$res = mysqli_query($link, $sql);
 		$row = mysqli_fetch_array($res, MYSQLI_ASSOC);
-		echo "<h2>" . $row['evt_name'] . "</h3>";
+		echo "<h2>" . $row['evt_name'] . "</h2>";
 		echo "<h5>Date: " . $row['evt_date'] . "</h5>";
 		echo "<h5>Time: " . $row['evt_time'] . "</h5>";
 		echo "<h3>" . $row['evt_description'] . "</h3>";
@@ -26,19 +26,7 @@ function listEventInfo() {
 		echo "<h3>Address: " . $row['address'] . "</h3>";
 		echo "<input type='hidden' id='lat' value='" . $row['lat'] . "' />";
 		echo "<input type='hidden' id='lng' value='" . $row['lng'] . "' />";
-		
-		
-		//$dbh = new PDO("mysql:host=$server;dbname=$db_name", $user, $pass);
-		//$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		//$stmt = $dbh->prepare("SELECT e.evt_name, e.evt_description, e.evt_date, e.evt_contact, e.evt_id, e.evt_comment FROM my_event e, public p WHERE e.evt_id = p.evt_id");
-		//$stmt->bindParam(':evt_id', $_GET['evt_id'], PDO::PARAM_INT);
-		//$stmt->execute();
-		//$result = $stmt->fetch(PDO::FETCH_ASSOC);
-		//echo "<h3>Name: " . $result['evt_name'] . "</h3>";
-		//echo "<h3>Description: " . $result['evt_description'] . "</h3>";
-		//echo "<h3>Date: " . $result['evt_date'] . "</h3>";
-		//echo "<h3>Contact Phone: " . $result['evt_contact'] . "</h3>";
-		//echo "<h3>Comments: " . $result['evt_comment'] . "</h3>";
+
 		$stmt = null;
 	}
 	catch(Exception $e){

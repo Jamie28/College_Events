@@ -89,6 +89,7 @@
 			mysqli_stmt_execute($stmt);
 			mysqli_stmt_close($stmt);
 		}else {
+			$event_type = mysqli_real_escape_string($link, $event_type);
 			$sql = "SELECT r.rso_id
 					FROM rso r
 					WHERE r.rso_name = '".$event_type."' ";

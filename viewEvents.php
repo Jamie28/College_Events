@@ -6,7 +6,7 @@
 		{
 			$dbh = new PDO("mysql:host=$server;dbname=$db_name", $user, $pass);
 			$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$stmt = $dbh->prepare("SELECT e.evt_name, e.evt_description, e.evt_date, e.evt_contact, e.evt_id FROM my_event e, public p WHERE e.evt_id = p.evt_id");
+			$stmt = $dbh->prepare("SELECT e.evt_name, e.evt_description, e.evt_date, e.evt_contact, e.evt_id FROM my_event e, public p, approve_e a WHERE e.evt_id = p.evt_id AND a.evt_id = e.evt_id AND a.approved = 1");
 			$stmt->execute();
 	
 			while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -25,7 +25,7 @@
 		try{
 			$dbh = new PDO("mysql:host=$server;dbname=$db_name", $user, $pass);
 			$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$stmt = $dbh->prepare("SELECT e.evt_name, e.evt_date, e.evt_description, e.evt_time, e.location, e.evt_contact, e.evt_id FROM my_event e, private p, student s, university u WHERE e.evt_id = p.evt_id AND p.unv_id = u.unv_id AND s.uid = :uid AND s.unv_id = p.unv_id");
+			$stmt = $dbh->prepare("SELECT e.evt_name, e.evt_date, e.evt_description, e.evt_time, e.location, e.evt_contact, e.evt_id FROM my_event e, private p, approve_e a, student s, university u WHERE e.evt_id = p.evt_id AND a.evt_id = e.evt_id AND a.approved = 1 AND p.unv_id = u.unv_id AND s.uid = :uid AND s.unv_id = p.unv_id");
 			$stmt->bindParam(':uid', $_SESSION['uid'], PDO::PARAM_INT);
 			$stmt->execute();
 
