@@ -27,9 +27,10 @@
 		if(empty($_POST['email1']) ||
 		   empty($_POST['email2']) ||
 		   empty($_POST['email3']) ||
-		   empty($_POST['email4']) )
+		   empty($_POST['email4']) ||
+		   empty($_POST['email5']))
 		{
-			$emailError = "Enter four email addresses.";
+			$emailError = "Enter five email addresses.";
 		}
 		else 
 		{
@@ -39,6 +40,7 @@
 			$email2 = strip_tags($_POST['email2']);
 			$email3 = strip_tags($_POST['email3']);
 			$email4 = strip_tags($_POST['email4']);
+			$email5 = strip_tags($_POST['email5']);
 			$currUser = $_SESSION['uid'];
 			
 			$sql = "SELECT DISTINCT uid, email
@@ -47,17 +49,12 @@
 					      	  email = '".$email2."' OR
 					      	  email = '".$email3."' OR
 					      	  email = '".$email4."' OR
+					      	  email = '".$email5."' OR
 					      	  uid = '".$currUser."' ";
 			$res = mysqli_query($link, $sql);
 			
-			if(mysqli_num_rows($res) == 5)
+			if(mysqli_num_rows($res) == 6)
 			{
-				//Get a new RSO id
-				$sql4 = "SELECT *
-						 FROM rso";
-				$res4 = mysqli_query($link, $sql4);
-				$rsoid = mysqli_num_rows($res4) + 1;
-				
 				//Insert the new rso
 				$sql = "INSERT INTO rso (rso_id, rso_name, unv_id, owner_id) VALUES (?, ?, ?, ?)";
 				$stmt = mysqli_prepare($link, $sql);
@@ -65,6 +62,7 @@
 				$unv_id = $_SESSION['unv_id'];
 				mysqli_stmt_bind_param($stmt, "isii", $rsoid, $rsoname, $unv_id, $currUser);
 				mysqli_stmt_execute($stmt);
+				$rsoid = mysqli_insert_id($link);
 				
 				//See if the user is already an admin. Don't want to add to admin table if user already present. 
 				//Don't actually need this, admin should have only one unique column, uid.
@@ -90,6 +88,7 @@
 					      	  email = '".$email2."' OR
 					      	  email = '".$email3."' OR
 					      	  email = '".$email4."' OR
+					      	  email = '".$email5."' OR
 					      	  uid = '".$currUser."' ";
 				$res = mysqli_query($link, $sql);
 				

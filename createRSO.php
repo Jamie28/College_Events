@@ -13,6 +13,7 @@
 			<input type = 'text' name = 'email2' /> <br> <br>
 			<input type = 'text' name = 'email3' /> <br> <br>
 			<input type = 'text' name = 'email4' /> <br> <br>
+			<input type = 'text' name = 'email5' /> <br> <br>
 			<input type = 'submit' name = 'Create RSO' value = 'Create RSO' />
 			</form>";
 	}
