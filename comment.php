@@ -1,6 +1,7 @@
 <?php
 	include "header.php";
 	include "dbhandler.php";
+	
 	$comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
 	$evt_id = $_GET['evt_id'];
 	$uid = $_SESSION['uid'];
@@ -12,7 +13,6 @@
 	mysqli_stmt_execute($stmt);
 	$comment_id = mysqli_insert_id($link);
 	mysqli_stmt_close($stmt);
-	
 ?>
 <div id="page">
   <?php 
