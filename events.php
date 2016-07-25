@@ -1,7 +1,7 @@
 <?php
 include "header.php";
 $evt_id = $_GET['evt_id'];
-function listEventInfo() {
+function viewInfo() {
 	
 	include "dbhandler.php";
 	try{
@@ -35,7 +35,7 @@ function listEventInfo() {
 	}
 }
 
-function listCommentsAndRatings() {
+function viewCommRat() {
 	include "dbhandler.php";
 	try{
 		$evt_id = $_GET['evt_id'];
@@ -75,7 +75,7 @@ height: 400px;}
 	<br><br><center><div class="logo"><a href="index.php"; 
 	color: #333333;">College Events</a></div></center>		
 		<?php 
-			listEventInfo();
+			viewInfo();
 			echo "<br>";
 		?>
   <div id="map"></div>
@@ -101,13 +101,13 @@ height: 400px;}
   <br>
   <br>
 		<?php
-			listCommentsAndRatings();
+			viewCommRat();
 		?>
 	<div id="page">
 	<br><br>
 			<form method="post" action="comment.php?evt_id=<?php echo $evt_id; ?>">
 				<table>
-					<tr><td><label for="text">Add Comment:</label> </td> </tr>
+					<tr><td><label for="text">New Comment:</label> </td> </tr>
 					<tr><td><textarea rows="4" cols="50" id="comment" name="comment" value="" maxlength="150"></textarea></td></tr>
 					<tr><td><input type="submit" value="Submit"> </td></tr>
 				</table>

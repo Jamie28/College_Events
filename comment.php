@@ -7,6 +7,7 @@
 	$uid = $_SESSION['uid'];
 	$comment_id = NULL;
 	
+	//add new comment into database 
 	$insert = "INSERT INTO comments (comment_id, evt_id, uid, text) VALUES (?, ?, ?, ?)";
 	$stmt = mysqli_prepare($link, $insert);
 	mysqli_stmt_bind_param($stmt, "iiis", $comment_id, $evt_id, $uid, $comment);

@@ -19,7 +19,7 @@ padding: 0;
 <body>  
 <?php include 'header.php';?>
 <h2>Create A New Event</h2>
-<p><span class="error">* required field</span></p>
+<p><span class="error">* Required</span></p>
 <form method = "post" action = 'includes/createEvent.inc.php'>				
   Event Name: <input type = "text" name = "evt_name" value="" >
   <span class="error">* </span><br><br>  
@@ -30,23 +30,27 @@ padding: 0;
   Type: <select name="event_type" id="event_type">
   <option value="public">Public</option>
   <option value="private">Private</option>
-  <?php 
+  
+  <?php  
+  //add all RSOs that belong to the user, to the "event-type" drop down list
   include "dbhandler.php";
+  
   $sql = "SELECT r.rso_name
 		  FROM rso r
 		  WHERE r.owner_id = '".$_SESSION['uid']."' ";
-  $res = mysqli_query($link, $sql);
+  $result = mysqli_query($link, $sql);
   
-  while($row = mysqli_fetch_array($res))
+  while($row = mysqli_fetch_array($result))
   {
   	$rsoname = $row['rso_name'];
   	echo "<option value=\"$rsoname\"> $rsoname </option>";
   }
   ?>
+  
   </select><br><br>
   Comments: <br><br> <textarea name="evt_comment" rows="5" cols="40"></textarea><br><br> 
   Description: <input type = "text" name = "evt_description" value=""><br><br>    
-  Contact Phone (e.g. 407-332-8888): <input type = "text" name = "evt_contact" value="" >
+  Contact Phone (e.g. 888-888-8888): <input type = "text" name = "evt_contact" value="" >
   <span class="error">* </span><br><br> 
   Location: <input type = "text" name = "lat" id="lat" value="28.601492">
   <input type = "text" name = "lng" id="lng" value="-81.200140">
@@ -54,6 +58,7 @@ padding: 0;
   Address: <input type = "text" name = "address" id="address" value="UCF"><br><br> 
   <div id="map"></div>
   <div id="capture"></div>
+ 
   <script>
 	var map;
 	var defLatLng = {lat: 28.601492, lng: -81.200140};
@@ -85,11 +90,12 @@ padding: 0;
 		document.getElementById("address").value = jsonObject.results[1].formatted_address;
 	}
   </script>
+  
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ_F7TCpsW-MDsigvIsqdVeoE6hOfa__0&callback=initMap">
   </script>
-  <br>
-  <input type="submit" name="Submit" value="Submit">  
+  
+  <br><input type="submit" name="Submit" value="Submit">  
 </form>
 </body>
 </html>

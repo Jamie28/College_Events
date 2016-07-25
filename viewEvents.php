@@ -1,6 +1,7 @@
 <?php
 	include ("header.php");
-	function listPublicEvents() {
+	//list view of every public event
+	function viewPublic() {
 		include "dbhandler.php";
 		try
 		{
@@ -16,11 +17,11 @@
 			$stmt = null;
 		}
 		catch(Exception $e){
-			echo 'We are unable to process your request. Please try again later';
+			echo 'Session Error.';
 		}
 	}
-	
-	function listUniversityEvents() {
+	//list view of private events
+	function viewUnv() {
 		include "dbhandler.php";
 		try{
 			$dbh = new PDO("mysql:host=$server;dbname=$db_name", $user, $pass);
@@ -39,8 +40,8 @@
 			echo 'We are unable to process your request. Please try again later';
 		}
 	}
-
-	function listRSOEvents() {
+	//list view of RSO events 
+	function viewRSO() {
 		include "dbhandler.php";
 		try
 		{
@@ -57,30 +58,28 @@
 			$stmt = null;
 		}
 		catch(Exception $e){
-			echo 'We are unable to process your request. Please try again later';
+			echo 'Session Error.';
 		}
 	}
 ?>
-	
-<!-- show public event -->
 	<center><p class="body"><U>PUBLIC EVENTS</U>
 	<br><br>
 		<?php
 			if(isset($_SESSION['user_id']) && $_SESSION['user_priv'] == 3){
-				listPublicEvents();
+				viewPublic();
 			}
 			elseif(!isset($_SESSION['user_id'])){
-				listPublicEvents();
+				viewPublic();
 			}
 		?>
 	<div id="page">
 	<center><p class="body"> <U>PRIVATE EVENTS</U>
 	<br><br>
-	<?php listUniversityEvents();?>
+	<?php viewUnv();?>
 	</p>
 		<center><p class="body"> <U>RSO EVENTS</U>
 		<br><br>
-			<?php listRSOEvents();?>
+			<?php viewRSO();?>
 	</p>
 		<br>
 		<br><br><center><div class="logo"><a href="viewEvents.php" style="border:1.5px; 
